@@ -1,4 +1,5 @@
 
+import { useEffect } from 'react'
 import { useState } from 'react'
 import './App.css'
 
@@ -8,8 +9,21 @@ function App() {
 	const [input, setInput] = useState("")
 	const [isEditing, setIsEditing] = useState(null)
 
+	//localStorage
+
+	useEffect(() => {
+		const storedTodos = JSON.parse(localStorage.getItem("todos"))
+		if (storedTodos) {
+			setTodos(storedTodos)
+		}
+	}, [])
+
+	//save || update todos to localStorage
+	useEffect(() => {
+		localStorage.setItem("todos", JSON.stringify(todos))
+	}, [todos])
+
 	const handleTodo = () => {
-		console.log({ input });
 		if (!input) return;
 
 		if (isEditing) {
